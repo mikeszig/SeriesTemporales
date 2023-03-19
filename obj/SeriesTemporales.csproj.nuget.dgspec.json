@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Miguel\\Desktop\\SeriesTemporales\\SeriesTemporales.csproj": {}
+    "C:\\Users\\Miguel\\Source\\Repos\\mikeszig\\SeriesTemporales\\SeriesTemporales.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Miguel\\Desktop\\SeriesTemporales\\SeriesTemporales.csproj": {
+    "C:\\Users\\Miguel\\Source\\Repos\\mikeszig\\SeriesTemporales\\SeriesTemporales.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Miguel\\Desktop\\SeriesTemporales\\SeriesTemporales.csproj",
+        "projectUniqueName": "C:\\Users\\Miguel\\Source\\Repos\\mikeszig\\SeriesTemporales\\SeriesTemporales.csproj",
         "projectName": "SeriesTemporales",
-        "projectPath": "C:\\Users\\Miguel\\Desktop\\SeriesTemporales\\SeriesTemporales.csproj",
+        "projectPath": "C:\\Users\\Miguel\\Source\\Repos\\mikeszig\\SeriesTemporales\\SeriesTemporales.csproj",
         "packagesPath": "C:\\Users\\Miguel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Miguel\\Desktop\\SeriesTemporales\\obj\\",
+        "outputPath": "C:\\Users\\Miguel\\Source\\Repos\\mikeszig\\SeriesTemporales\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Miguel\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,13 +40,13 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "LG.Microsoft.ML.TimeSeries": {
-              "target": "Package",
-              "version": "[1.6.0.4, )"
-            },
             "Microsoft.ML": {
               "target": "Package",
               "version": "[3.0.0-preview.22621.2, )"
+            },
+            "Microsoft.ML.TimeSeries": {
+              "target": "Package",
+              "version": "[2.0.1, )"
             },
             "MySql.Data": {
               "target": "Package",

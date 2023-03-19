@@ -1,6 +1,4 @@
-﻿using Microsoft.ML.Data;
-
-namespace SeriesTemporales.Model
+﻿namespace SeriesTemporales.Model
 {
     public class OutputModel
     {
