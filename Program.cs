@@ -3,6 +3,10 @@ using Microsoft.ML;
 using SeriesTemporales.Model;
 using System.Data;
 using MySqlConnector;
+using Microsoft.ML.Runtime;
+using System.Globalization;
+using Microsoft.ML.Transforms.TimeSeries;
+using Mysqlx.Cursor;
 
 public class Program
 {
@@ -34,11 +38,64 @@ public class Program
                                     horizon: 6,
                                     confidenceLevel: 0.95f
                                     );
-        SsaForecastingTransformer forecasterTransformer = forecastingPipeline.Fit(dataView);
+        SsaForecastingTransformer forecasterTransformer = forecastingPipeline.Fit(trainingDataView);
         Evaluate(testingDataView, forecasterTransformer, mlContext);
         //var forecastEngine = forecasterTransformer.CreateTimeSeriesEngine<InputModel, OutputModel>(mlContext);  //<- System.MissingMethodException: 
         //'Method not found: 'Void Microsoft.ML.PredictionEngineBase`2..ctor(Microsoft.ML.Runtime.IHostEnvironment, Microsoft.ML.ITransformer, Boolean, Microsoft.ML.Data.SchemaDefinition, Microsoft.ML.Data.SchemaDefinition)'.'
-        Forecast(testingDataView, 6, forecastEngine, mlContext);
+
+        /*
+         * NOTA. El fallo de arriba era por una referencia de paquete incorrecta. 
+         * En la configuración del proyecto está comentada la referencia al paquete que estaba provocando la excepción.
+         */
+
+        // Obtenemos la información del constructor TimeSeriesPredictionEngine<InputModel, OutputModel>
+        var constructorMethod = typeof(PredictionFunctionExtensions)
+                                    .GetMethod(nameof(PredictionFunctionExtensions.CreateTimeSeriesEngine),
+                                    new Type[] {
+                                        typeof(ITransformer),
+                                        typeof(IHostEnvironment),
+                                        typeof(Boolean),
+                                        typeof(SchemaDefinition),
+                                        typeof(SchemaDefinition)});
+        // Usamos MakeGenericMethod para declarar los tipos genéricos del método al que estamos llamando
+        var constructor = constructorMethod.MakeGenericMethod(new Type[] { typeof(InputModel), typeof(OutputModel) });
+
+        // Invocamos al método que hemos obtenido arriba (Toda esta técnica se llama Reflection)
+#pragma warning disable CS8600 // Se va a convertir un literal nulo o un posible valor nulo en un tipo que no acepta valores NULL
+        var engine = (TimeSeriesPredictionEngine<InputModel, OutputModel>)constructor.Invoke(forecasterTransformer,
+            new object[] { forecasterTransformer, mlContext, true,
+                SchemaDefinition.Create(typeof(InputModel)), SchemaDefinition.Create(typeof(OutputModel)) }); // <- [SOLVED]Parameter count mismatch / Method not found
+#pragma warning restore CS8600 // Se va a convertir un literal nulo o un posible valor nulo en un tipo que no acepta valores NULL
+
+        Forecast(testingDataView, 6, engine, mlContext);
+    }
+
+
+    /// <summary>
+    /// Los datos que nos llegan de la fuente no están en un formato aceptado por el modelo.
+    /// Es por eso que es necesario formatearlos antes de seguir con el proceso. 
+    /// Leemos los objetos DataModel contenidos en el IDataView idv que se pasa por parámetro,
+    /// convertimos el número de pasajeros a Single y la fecha de string a DateTime.
+    /// </summary>
+    /// <returns> IDataView<InputModel> </returns>
+    private static IDataView FormatIDataView(IDataView idv, MLContext mlContext)
+    {
+        List<InputModel> inputs = new List<InputModel>();
+        int iRow = 0;
+        var FEATURE = Array.ConvertAll(idv.GetColumn<UInt32>("Passengers").ToArray(), item => Convert.ToSingle(item));
+        var TARGET = idv.GetColumn<string>("Month").ToArray();
+        foreach (var row in FEATURE)
+        {
+            var obs = new InputModel();
+            obs.Month = DateTime.ParseExact(TARGET[iRow], "yyyy-MM", CultureInfo.InvariantCulture);
+            obs.Passengers = row;
+            inputs.Add(obs);
+            iRow++;
+        }
+        IEnumerable<InputModel> inputsIEnum = inputs;
+        var definedSchema = SchemaDefinition.Create(typeof(InputModel));
+        IDataView trainingDataView = mlContext.Data.LoadFromEnumerable(inputsIEnum, definedSchema);
+        return trainingDataView;
     }
 
     private static IDataView LoadFromDatabase(string connectionString, string sqlCommand, MLContext mlContext)
