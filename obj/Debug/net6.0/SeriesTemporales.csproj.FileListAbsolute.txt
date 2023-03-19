@@ -67,3 +67,4 @@ C:\Users\Miguel\Desktop\SeriesTemporales\bin\Debug\net6.0\runtimes\win\lib\netst
 C:\Users\Miguel\Desktop\SeriesTemporales\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 C:\Users\Miguel\Desktop\SeriesTemporales\bin\Debug\net6.0\MySqlConnector.dll
 C:\Users\Miguel\Desktop\SeriesTemporales\bin\Debug\net6.0\Data\AirPassengers.csv
+C:\Users\Miguel\Desktop\SeriesTemporales\bin\Debug\net6.0\nunit.framework.dll

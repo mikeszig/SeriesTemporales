@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "PkIxtcyChl4UjxegYI98KfZIE8rAEDtCjqOLngkROPijFxcU58eoi4Od8eqFxuLY60BL3kMpU+KHlAit9dXHVQ==",
+  "dgSpecHash": "f5zcK1F7hA0Z6qWwi127+MAhepHvDaBRvkdOj/q3umLfBtpa/C4uARSUskBPX7C4pUba3GGNYEL9efo10Ue3/A==",
   "success": true,
   "projectFilePath": "C:\\Users\\Miguel\\Desktop\\SeriesTemporales\\SeriesTemporales.csproj",
   "expectedPackageFiles": [
@@ -22,7 +22,9 @@
     "C:\\Users\\Miguel\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\Miguel\\.nuget\\packages\\mysql.data\\8.0.32.1\\mysql.data.8.0.32.1.nupkg.sha512",
     "C:\\Users\\Miguel\\.nuget\\packages\\mysqlconnector\\2.2.5\\mysqlconnector.2.2.5.nupkg.sha512",
+    "C:\\Users\\Miguel\\.nuget\\packages\\netstandard.library\\2.0.0\\netstandard.library.2.0.0.nupkg.sha512",
     "C:\\Users\\Miguel\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\Miguel\\.nuget\\packages\\nunit\\3.13.3\\nunit.3.13.3.nupkg.sha512",
     "C:\\Users\\Miguel\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
     "C:\\Users\\Miguel\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",
     "C:\\Users\\Miguel\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
